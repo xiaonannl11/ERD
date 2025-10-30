@@ -1,0 +1,71 @@
+erdiagram MiniProject1
+notation=crowsfoot
+
+entity PROMOTION {
+    PROM_ID: INTEGER key
+    CUS_ID: INTEGER
+    PROMO_TYPE: VARCHAR(50)
+    SOURCE_TYPE: VARCHAR(50)
+    PROMO_DATE: DATE
+}
+
+entity CUSTOMER {
+    CUS_ID: INTEGER key
+    CUS_NAME: VARCHAR(100)
+    CUS_PHONE_NUM: VARCHAR(20)
+    CUS_EMAIL: VARCHAR(100)
+}
+
+entity MANUFACTURE {
+    MANU_ID: INTEGER key
+    MANU_NAME: VARCHAR(100)
+    MANU_CATEG: VARCHAR(50)
+    MANU_EMAIL: VARCHAR(100)
+    MANU_STATUS: VARCHAR(50)
+    MANU_PHONE: VARCHAR(20)
+}
+
+entity INVOICE {
+    INV_ID: INTEGER key
+    INV_DATE: DATE
+    CUS_ID: INTEGER
+}
+
+entity PRODUCT {
+    P_CODE: INTEGER key
+    P_CATEGORY: VARCHAR(50)
+    P_QOH: INTEGER
+    P_PRICE: DECIMAL(10,2)
+}
+
+entity "ORDER" {
+    ORD_ID: INTEGER key
+    MANU_ID: INTEGER
+    ORD_DATE: DATE
+    ORD_STATUS: VARCHAR(50)
+}
+
+entity LINE {
+    LINE_ID: INTEGER key
+    INV_ID: INTEGER
+    P_CODE: INTEGER
+    LINE_UNIT: INTEGER
+    LINE_PRICE: DECIMAL(10,2)
+}
+
+entity ORDER_LINE {
+    ORDERLINE_ID: INTEGER key
+    ORD_ID: INTEGER
+    P_CODE: INTEGER
+    ORD_QOH: INTEGER
+    ORD_PRICE: DECIMAL(10,2)
+}
+
+relationship PromotionCustomer { CUSTOMER[1] -> PROMOTION[0..N] }
+relationship CustomerInvoice   { CUSTOMER[1] -> INVOICE[0..N] }
+relationship InvoiceLine       { INVOICE[1]  -> LINE[0..N] }
+relationship LineProduct       { PRODUCT[1]  -> LINE[0..N] }
+relationship ManufactureOrder  { MANUFACTURE[1] -> "ORDER"[0..N] }
+relationship OrderOrderLine    { "ORDER"[1]  -> ORDER_LINE[0..N] }
+relationship ProductOrderLine  { PRODUCT[1]  -> ORDER_LINE[0..N] }
+
