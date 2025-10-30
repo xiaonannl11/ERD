@@ -16,7 +16,7 @@ entity CUSTOMER {
     CUS_EMAIL: VARCHAR(100)
 }
 
-entity MANUFACTURE {
+entity MANUFACTURER {
     MANU_ID: INTEGER key
     MANU_NAME: VARCHAR(100)
     MANU_CATEG: VARCHAR(50)
@@ -38,7 +38,7 @@ entity PRODUCT {
     P_PRICE: DECIMAL(10,2)
 }
 
-entity "ORDER" {
+entity ORDERS {
     ORD_ID: INTEGER key
     MANU_ID: INTEGER
     ORD_DATE: DATE
@@ -65,7 +65,7 @@ relationship PromotionCustomer { CUSTOMER[1] -> PROMOTION[0..N] }
 relationship CustomerInvoice   { CUSTOMER[1] -> INVOICE[0..N] }
 relationship InvoiceLine       { INVOICE[1]  -> LINE[0..N] }
 relationship LineProduct       { PRODUCT[1]  -> LINE[0..N] }
-relationship ManufactureOrder  { MANUFACTURE[1] -> "ORDER"[0..N] }
-relationship OrderOrderLine    { "ORDER"[1]  -> ORDER_LINE[0..N] }
+relationship ManufacturerOrder  { MANUFACTURER[1] -> ORDERS[0..N] }
+relationship OrderOrderLine    { ORDERS[1]  -> ORDER_LINE[0..N] }
 relationship ProductOrderLine  { PRODUCT[1]  -> ORDER_LINE[0..N] }
 
